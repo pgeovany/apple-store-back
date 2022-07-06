@@ -1,16 +1,14 @@
-import express, { application, json } from 'express';
+import express, { json } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import router from './routes/router.js';
 
 dotenv.config();
 
 const server = express();
-
 server.use([cors(), json()]);
 
-server.get('/hello', async (req, res) => {
-  res.status(200).send('Hello');
-});
+server.use(router);
 
 server.listen(process.env.PORT, () =>
   console.log(`Server running on port ${process.env.PORT}`)
