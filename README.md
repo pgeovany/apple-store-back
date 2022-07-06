@@ -22,3 +22,20 @@ sending a body in the format:
   password: "..."
 }
 ```
+
+#### **GET** - Products
+
+In order to get products, make a get request to: https://apple-store0.herokuapp.com/products
+receiving a response in the format:
+
+```
+[
+  {
+    "_id": "Product Id",
+    "name": "Product name",
+    "price": 100,
+    "image": "Image_link.png",
+    "description": "Product description."
+  }
+]
+```
