@@ -1,9 +1,10 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const mongoClient = new MongoClient(process.env.MONGO_URI);
+const { MONGO_URI } = process.env;
+const mongoClient = new MongoClient(MONGO_URI);
 
 async function getDataBase() {
   await mongoClient.connect();
@@ -14,4 +15,4 @@ async function closeDataBase() {
   await mongoClient.close();
 }
 
-export default { getDataBase, closeDataBase };
+export { getDataBase, closeDataBase, ObjectId };

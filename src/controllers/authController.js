@@ -1,54 +1,41 @@
-import Joi from 'joi';
-import bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
-import jwt from 'jsonwebtoken';
 
-import httpStatus from '../utils/httpStatus.js';
-import mongo from '../database/mongo.js';
+import { closeDataBase } from '../databases/mongo.js';
+import createAccount from '../utils/user/createAccount.js';
+import createSession from '../utils/session/createSession.js';
+import generateToken from '../utils/token/generateToken.js';
+import STATUS from '../utils/statusCodes.js';
 
 async function signIn(req, res) {
-  const { email, password } = req.body;
-
-  const schema = Joi.object({
-    email: Joi.string().email().required(),
-    password: Joi.string().required(),
-  });
-
-  const validation = schema.validate(
-    { email, password },
-    { abortEarly: false }
-  );
-
-  if (validation.error) {
-    res.sendStatus(httpStatus.UNPROCESSABLE_ENTITY);
-    return;
-  }
+  const { user, db } = req.locals;
 
   try {
-    const db = await mongo.getDataBase();
-
-    const user = await db.collection('users').findOne({ email });
-
-    if (!user || !bcrypt.compareSync(password, user.password)) {
-      res.sendStatus(httpStatus.UNAUTHORIZED);
-      return;
-    }
-
     const session = uuid();
-    const userId = user._id;
 
-    await db.collection('sessions').insertOne({ session, userId });
+    await createSession(session, user._id, db);
 
-    const jwtSecret = process.env.JWT_SECRET;
-
-    const token = jwt.sign({ session }, jwtSecret, {
-      expiresIn: 60 * 60 * 24 * 30,
-    });
+    const token = generateToken(session);
 
     res.send({ token });
   } catch (error) {
-    res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+    console.log(error);
+    res.sendStatus(STATUS.INTERNAL_SERVER_ERROR);
+  } finally {
+    closeDataBase();
   }
 }
 
-export default { signIn };
+async function signUp(req, res) {
+  const { user, db } = req.locals;
+
+  try {
+    await createAccount(user, db);
+    res.sendStatus(STATUS.CREATED);
+    closeDataBase();
+  } catch (error) {
+    res.status(STATUS.INTERNAL_SERVER_ERROR).send('Erro ao cadastrar usuário!');
+    closeDataBase();
+  }
+}
+
+export { signUp, signIn };
