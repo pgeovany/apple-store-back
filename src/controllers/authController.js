@@ -18,7 +18,6 @@ async function signIn(req, res) {
 
     res.send({ token });
   } catch (error) {
-    console.log(error);
     res.sendStatus(STATUS.INTERNAL_SERVER_ERROR);
   } finally {
     closeDataBase();
