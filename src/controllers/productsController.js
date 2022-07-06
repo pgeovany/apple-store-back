@@ -8,7 +8,6 @@ async function getProducts(req, res) {
 
     res.send(products);
   } catch (error) {
-    console.log(error);
     res.sendStatus(STATUS.INTERNAL_SERVER_ERROR);
   } finally {
     closeDataBase();
