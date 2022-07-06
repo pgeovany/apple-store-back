@@ -1,13 +1,15 @@
+import bcrypt from 'bcrypt';
+
 import { getDataBase, closeDataBase } from '../databases/mongo.js';
-import { signUpSchema } from '../utils/schemas.js';
+import { signInSchema } from '../utils/schemas.js';
 import getUserByEmail from '../utils/user/getUserByEmail.js';
 import STATUS from '../utils/statusCodes.js';
 
-async function signUpValidationMiddleware(req, res, next) {
+async function signInValidationMiddleware(req, res, next) {
   const user = req.body;
 
   try {
-    await signUpSchema.validateAsync(user);
+    await signInSchema.validateAsync(user);
   } catch (error) {
     res
       .status(STATUS.UNPROCESSABLE_ENTITY)
@@ -19,8 +21,12 @@ async function signUpValidationMiddleware(req, res, next) {
   try {
     const db = await getDataBase();
     const userExists = await getUserByEmail(user.email, db);
-    if (userExists) {
-      res.status(STATUS.CONFLICT).send('Esse email já está cadastrado!');
+
+    if (
+      !userExists ||
+      !bcrypt.compareSync(user.password, userExists.password)
+    ) {
+      res.status(STATUS.UNAUTHORIZED).send('E-mail ou senha incorretos!');
       closeDataBase();
       return;
     }
@@ -32,9 +38,9 @@ async function signUpValidationMiddleware(req, res, next) {
 
     next();
   } catch (error) {
-    res.status(STATUS.INTERNAL_SERVER_ERROR).send('Erro ao cadastrar usuário!');
+    res.status(STATUS.INTERNAL_SERVER_ERROR).send('Erro ao logar usuário!');
     closeDataBase();
   }
 }
 
-export default signUpValidationMiddleware;
+export default signInValidationMiddleware;
