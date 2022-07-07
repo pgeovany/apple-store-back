@@ -7,7 +7,7 @@ import generateToken from '../utils/token/generateToken.js';
 import STATUS from '../utils/statusCodes.js';
 
 async function signIn(req, res) {
-  const { user, db } = req.locals;
+  const { user, db, userName } = req.locals;
 
   try {
     const session = uuid();
@@ -16,7 +16,7 @@ async function signIn(req, res) {
 
     const token = generateToken(session);
 
-    res.send({ token });
+    res.send({ name: userName, token });
   } catch (error) {
     res.sendStatus(STATUS.INTERNAL_SERVER_ERROR);
   } finally {

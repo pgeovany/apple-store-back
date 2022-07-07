@@ -34,6 +34,7 @@ async function signInValidationMiddleware(req, res, next) {
     req.locals = {
       user,
       db,
+      userName: userExists.name,
     };
 
     next();

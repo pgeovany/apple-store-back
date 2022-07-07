@@ -1,6 +1,6 @@
 #### **POST** - Sign-up
 
-In order to sign-up, make a post request to: https://apple-store0.herokuapp.com/sign-up \
+In order to sign-up, make a post request to: https://apple-store0.herokuapp.com/sign-up
 sending a body in the format:
 
 ```
@@ -20,6 +20,15 @@ sending a body in the format:
 {
   email: "...",
   password: "..."
+}
+```
+
+The server will respond with an object in the format:
+
+```
+{
+  name: "...",
+  token: "..."
 }
 ```
 
