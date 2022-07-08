@@ -7,12 +7,12 @@ import generateToken from '../utils/token/generateToken.js';
 import STATUS from '../utils/statusCodes.js';
 
 async function signIn(req, res) {
-  const { user, db, userName } = req.locals;
+  const { userId, userName, db } = req.locals;
 
   try {
     const session = uuid();
 
-    await createSession(session, user._id, db);
+    await createSession(session, userId, db);
 
     const token = generateToken(session);
 

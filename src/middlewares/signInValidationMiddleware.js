@@ -32,9 +32,9 @@ async function signInValidationMiddleware(req, res, next) {
     }
 
     req.locals = {
-      user,
-      db,
+      userId: userExists._id,
       userName: userExists.name,
+      db,
     };
 
     next();
