@@ -48,3 +48,23 @@ receiving a response in the format:
   }
 ]
 ```
+
+### **_POST_** - Order
+
+In order to register a new order, make a post request to: https://apple-store0.herokuapp.com/order sending a body in the format:
+
+```
+{
+  adress: "...",
+  paymentInfo:
+    {
+      name: "..."
+      cardType: "...",
+      cardNumber: "...",
+      CVV: "..."
+    }
+  items: [...]
+}
+```
+
+and an **Authorization header** in the Bearer TOKEN format.
