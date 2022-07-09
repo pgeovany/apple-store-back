@@ -11,4 +11,15 @@ const signInSchema = joi.object({
   password: joi.string().required(),
 });
 
-export { signUpSchema, signInSchema };
+const orderSchema = joi.object({
+  adress: joi.string().required(),
+  paymentInfo: {
+    name: joi.string().required(),
+    cardType: joi.string().valid('credit', 'debit').required(),
+    cardNumber: joi.string().required(),
+    cvv: joi.string().pattern(/^[0-9]{3}$/),
+  },
+  items: joi.array().required(),
+});
+
+export { signUpSchema, signInSchema, orderSchema };
