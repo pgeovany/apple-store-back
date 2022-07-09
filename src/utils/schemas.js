@@ -17,7 +17,7 @@ const orderSchema = joi.object({
     name: joi.string().required(),
     cardType: joi.string().required(),
     cardNumber: joi.string().required(),
-    cvv: joi.number().min(100).max(999), // eslint-disable-line
+    cvv: joi.string().pattern(/^[0-9]{3}$/),
   },
   items: joi.array().required(),
 });

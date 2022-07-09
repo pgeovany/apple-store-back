@@ -8,7 +8,7 @@ async function registerOrder(session, order) {
 
   const SALT = 10;
   const cardNumberHash = bcrypt.hashSync(order.paymentInfo.cardNumber, SALT);
-  const cvvHash = bcrypt.hashSync(order.paymentInfo.cvv.toString(), SALT);
+  const cvvHash = bcrypt.hashSync(order.paymentInfo.cvv, SALT);
 
   await db.collection('orders').insertOne({
     userId,
