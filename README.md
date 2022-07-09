@@ -61,7 +61,7 @@ In order to register a new order, make a post request to: https://apple-store0.h
       name: "..."
       cardType: "...",
       cardNumber: "...",
-      CVV: "..."
+      cvv: "..."
     }
   items: [...]
 }

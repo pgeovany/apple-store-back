@@ -11,4 +11,15 @@ const signInSchema = joi.object({
   password: joi.string().required(),
 });
 
-export { signUpSchema, signInSchema };
+const orderSchema = joi.object({
+  adress: joi.string().required(),
+  paymentInfo: {
+    name: joi.string().required(),
+    cardType: joi.string().required(),
+    cardNumber: joi.string().required(),
+    cvv: joi.number().min(100).max(999), // eslint-disable-line
+  },
+  items: joi.array().required(),
+});
+
+export { signUpSchema, signInSchema, orderSchema };
