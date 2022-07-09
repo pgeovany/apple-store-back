@@ -3,7 +3,7 @@ import { getDataBase, closeDataBase } from '../databases/mongo.js';
 import getSession from '../utils/session/getSession.js';
 import STATUS from '../utils/statusCodes.js';
 
-async function signOutValidationMiddleware(req, res, next) {
+async function tokenValidationMiddleware(req, res, next) {
   const { authorization } = req.headers;
   const token = authorization?.replace('Bearer ', '');
 
@@ -44,4 +44,4 @@ async function signOutValidationMiddleware(req, res, next) {
   }
 }
 
-export default signOutValidationMiddleware;
+export default tokenValidationMiddleware;
