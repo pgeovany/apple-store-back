@@ -49,7 +49,7 @@ receiving a response in the format:
 ]
 ```
 
-### **_POST_** - Order
+#### **_POST_** - Order
 
 In order to register a new order, make a post request to: https://apple-store0.herokuapp.com/order sending a body in the format:
 
