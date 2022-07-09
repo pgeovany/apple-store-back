@@ -4,6 +4,7 @@ import { closeDataBase } from '../databases/mongo.js';
 import createAccount from '../utils/user/createAccount.js';
 import createSession from '../utils/session/createSession.js';
 import generateToken from '../utils/token/generateToken.js';
+import deleteSession from '../utils/session/deleteSession.js';
 import STATUS from '../utils/statusCodes.js';
 
 async function signIn(req, res) {
@@ -37,4 +38,17 @@ async function signUp(req, res) {
   }
 }
 
-export { signUp, signIn };
+async function signOut(req, res) {
+  const { session, db } = req.locals;
+
+  try {
+    await deleteSession(session, db);
+    res.sendStatus(STATUS.NO_CONTENT);
+  } catch (error) {
+    res.sendStatus(STATUS.INTERNAL_SERVER_ERROR);
+  } finally {
+    closeDataBase();
+  }
+}
+
+export { signUp, signIn, signOut };
