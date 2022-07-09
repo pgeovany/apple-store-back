@@ -15,7 +15,7 @@ const orderSchema = joi.object({
   adress: joi.string().required(),
   paymentInfo: {
     name: joi.string().required(),
-    cardType: joi.string().required(),
+    cardType: joi.string().valid('credit', 'debit').required(),
     cardNumber: joi.string().required(),
     cvv: joi.string().pattern(/^[0-9]{3}$/),
   },
