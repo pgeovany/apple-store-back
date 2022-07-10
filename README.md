@@ -58,12 +58,20 @@ In order to register a new order, make a post request to: https://apple-store0.h
   adress: "...",
   paymentInfo:
     {
-      name: "..."
-      cardType: "...",
-      cardNumber: "...",
-      cvv: "..."
+      name: "Name on the card"
+      cardType: "credit",
+      cardNumber: 9999999999999999,
+      cvv: 999
     }
-  items: [...]
+  items: [
+    {
+      "_id": "Product Id",
+      "name": "Product name",
+      "price": 100,
+      "image": "Image_link.png",
+      "description": "Product description."
+    }
+  ]
 }
 ```
 
