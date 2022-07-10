@@ -72,7 +72,3 @@ and an **Authorization header** in the Bearer TOKEN format.
 #### **POST** - Sign-out
 
 In order to sign out, make a post request to: https://apple-store0.herokuapp.com/sign-out sending the token with the **Authorization** key in the headers. No body needed.
-
-#### **POST** - Status
-
-In order to update session last status, make a post request to: https://apple-store0.herokuapp.com/status sending the token with the **Authorization** key in the headers. No body needed.
