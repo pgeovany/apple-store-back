@@ -28,6 +28,7 @@ The server will respond with an object in the format:
 ```
 {
   name: "...",
+  email: "...",
   token: "..."
 }
 ```
