@@ -8,16 +8,16 @@ import deleteSession from '../utils/session/deleteSession.js';
 import STATUS from '../utils/statusCodes.js';
 
 async function signIn(req, res) {
-  const { userId, userName, db } = req.locals;
+  const { id, name, email, db } = req.locals;
 
   try {
     const session = uuid();
 
-    await createSession(session, userId, db);
+    await createSession(session, id, db);
 
     const token = generateToken(session);
 
-    res.send({ name: userName, token });
+    res.send({ name, email, token });
   } catch (error) {
     res.sendStatus(STATUS.INTERNAL_SERVER_ERROR);
   } finally {
